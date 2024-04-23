@@ -11,13 +11,13 @@ Se utilizzi Windows, devi installare WSL (Windows Subsystem for Linux) https://l
 Ogni volta che hai bisogno di aprire un nuovo terminale, dalla PowerShell di Windows esegui il comando `wsl -u NOME_UTENTE --cd /home/NOME_UTENTE`
 
 ## Fork e setup iniziale
-Effettua il fork di questo repository tramite [questo link](https://github.com/caprionlinesrl/job-devj3/fork) oppure cliccando sul pulsante "Fork" nella pagina del repository su GitHub. In questo modo verrà creata una copia del repository all'interno del tuo account GitHub, sulla quale potrai lavorare liberamente.
+Effettua il fork di questo repository tramite [questo link](https://github.com/caprionlinesrl/caprionline-dev-junior-test-3/fork) oppure cliccando sul pulsante "Fork" nella pagina del repository su GitHub. In questo modo verrà creata una copia del repository all'interno del tuo account GitHub, sulla quale potrai lavorare liberamente.
 
 ## Clonazione del repository
 Dopo aver effettuato il fork, clona il repository sul tuo computer e configura i tuoi dati Git:
 ```
-git clone https://github.com/GITHUB_ACCOUNT/job-devj3.git
-cd job-devj3
+git clone https://github.com/GITHUB_ACCOUNT/caprionline-dev-junior-test-3.git
+cd caprionline-dev-junior-test-3
 git config user.email username@dominio.com
 git config user.name "Nome Cognome"
 ```
