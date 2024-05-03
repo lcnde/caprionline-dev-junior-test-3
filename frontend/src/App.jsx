@@ -17,7 +17,9 @@ const customBlue500 = '#3086BD'
 const App = (props) => {
   const [movies, setMovies] = useState([])
   const [loading, setLoading] = useState(true)
+  // Pairs each movie Id with the Id of its genre
   const [movieGenres, setMovieGenres] = useState([])
+  // Contains each genre name with its Id
   const [genres, setGenres] = useState([])
   // This is the state of the movies that will appear on the website
   const [showMovies, setShowMovies] = useState([])
@@ -182,8 +184,6 @@ const MovieList = (props) => {
     </div>
   )
 }
-
-
 
 const MovieItem = (props) => {
   return (
