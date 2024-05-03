@@ -8,6 +8,11 @@ export default {
     flowbite.content()
   ],
   theme: {
+    colors: {
+      'custom-blue-500': '#3086BD',
+      'custom-gray-900': '#1E2126',
+      'custom-gray-600': '#4F5052',
+    },
     extend: {}
   },
   plugins: [
