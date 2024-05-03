@@ -132,7 +132,17 @@ const HeroBanner = (props) => {
               <div className="w-full z-10 flex items-center px-20">
                 <div className="mx-auto md:ml-[10%] max-w-[600px] flex flex-col gap-4">
                   <div className="flex flex-col gap-2">
-                    <div className="flex">genre duration rating</div>
+                    <div className="flex gap-2 ">
+                      <span>{item.duration ? item.duration : null}</span>
+                      <span>
+                        {item.rating ? (
+                          <Rating>
+                            <Rating.Star />
+                            <span className="ml-0.5">{item.rating}</span>
+                          </Rating>
+                        ) : null}
+                      </span>
+                    </div>
                     <h2 className="text-4xl font-bold">{item.title}</h2>
                   </div>
                   <p className="text-lg overflow-hidden line-clamp-4">
