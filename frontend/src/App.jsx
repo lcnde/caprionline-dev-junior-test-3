@@ -167,7 +167,7 @@ const MovieList = (props) => {
   }
 
   return (
-    <div className="grid gap-4 md:gap-y-8 xl:grid-cols-6 lg:grid-cols-4 md:grid-cols-3">
+    <div className="grid gap-4 md:gap-y-8 xl:grid-cols-6 lg:grid-cols-4 md:grid-cols-3 px-2">
       {props.children}
     </div>
   )
