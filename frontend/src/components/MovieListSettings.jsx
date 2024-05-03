@@ -1,10 +1,16 @@
 import { Dropdown } from 'flowbite-react'
 import GenreSidebar from './GenreSidebar'
 
-
 const MovieListSettings = (props) => {
   const orderByReleaseDate = (movies) => {
-    const orderedItems = [...movies].sort((a, b) => new Date(b.releaseDate) - new Date(a.releaseDate))
+    const orderedItems = [...movies].sort(
+      (a, b) => new Date(b.releaseDate) - new Date(a.releaseDate),
+    )
+    props.setShowMovies(orderedItems)
+  }
+
+  const orderByRating = (movies) => {
+    const orderedItems = [...movies].sort((a, b) => b.rating - a.rating)
     props.setShowMovies(orderedItems)
   }
 
@@ -20,8 +26,12 @@ const MovieListSettings = (props) => {
         setShowMovies={props.setShowMovies}
       />
       <Dropdown label="Order by">
-        <Dropdown.Item onClick={() => orderByReleaseDate(props.showMovies)}>Newest</Dropdown.Item>
-        <Dropdown.Item>Rating</Dropdown.Item>
+        <Dropdown.Item onClick={() => orderByReleaseDate(props.showMovies)}>
+          Newest
+        </Dropdown.Item>
+        <Dropdown.Item onClick={() => orderByRating(props.showMovies)}>
+          Rating
+        </Dropdown.Item>
       </Dropdown>
     </div>
   )
