@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {
-  Button,
-  Rating,
-  Spinner,
-  Carousel,
-  Dropdown,
-  Drawer,
-} from 'flowbite-react'
+import { Button, Rating, Spinner, Carousel } from 'flowbite-react'
 
 import MovieListSettings from './components/MovieListSettings'
 
