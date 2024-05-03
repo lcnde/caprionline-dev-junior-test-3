@@ -119,7 +119,6 @@ const HeroBanner = (props) => {
     <div className="h-[500px] xl:h-[576px] 2xl:h-[700px]">
       <Carousel slideInterval={5000} pauseOnHover={true} indicators={false}>
         {props.movies.map((item, key) => {
-          console.log(item)
           return (
             <div
               className={`relative flex text-white h-full`}
@@ -149,7 +148,7 @@ const HeroBanner = (props) => {
                 </div>
               </div>
               {/* Add dark overlay */}
-              <div class="before:absolute before:inset-0 before:bg-black before:opacity-50"></div>
+              <div className="before:absolute before:inset-0 before:bg-black before:opacity-50"></div>
             </div>
           )
         })}
