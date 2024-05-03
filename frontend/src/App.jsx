@@ -1,81 +1,126 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Rating, Spinner } from 'flowbite-react';
+import React, { useEffect, useState } from 'react'
+import { Button, Rating, Spinner, Carousel, Dropdown, Drawer } from 'flowbite-react'
 
-const App = props => {
-  const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(true);
+const App = (props) => {
+  const [movies, setMovies] = useState([])
+  const [loading, setLoading] = useState(true)
 
   const fetchMovies = () => {
-    setLoading(true);
+    setLoading(true)
 
     return fetch('http://localhost:8000/movies')
-      .then(response => response.json())
-      .then(data => {
-        setMovies(data);
-        setLoading(false);
-      });
+      .then((response) => response.json())
+      .then((data) => {
+        setMovies(data)
+        setLoading(false)
+      })
   }
 
   useEffect(() => {
-    fetchMovies();
-  }, []);
+    fetchMovies()
+  }, [])
 
   return (
     <Layout>
       <Heading />
-
+      <HeroBanner movies={movies} loading={loading} />
       <MovieList loading={loading}>
         {movies.map((item, key) => (
           <MovieItem key={key} {...item} />
         ))}
       </MovieList>
     </Layout>
-  );
-};
+  )
+}
 
-const Layout = props => {
+const Layout = (props) => {
   return (
-    <section className="bg-white dark:bg-gray-900">
-      <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
-        {props.children}
-      </div>
+    <section className="bg-custom-gray-900 min-h-screen">
+      <div className="">{props.children}</div>
     </section>
-  );
-};
+  )
+}
 
-const Heading = props => {
+const Heading = (props) => {
   return (
-    <div className="mx-auto max-w-screen-sm text-center mb-8 lg:mb-16">
-      <h1 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
-        Movie Collection
+    <div className="flex flex-col justify-center items-center p-4 bg-custom-gray-900 z-10 shadow-2xl col-start-2">
+      <h1 className="flex gap-3 mb-1 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+        <span className="text-white">Capri</span>
+        <span className="text-custom-blue-500">Movies</span>
       </h1>
-
-      <p className="font-light text-gray-500 lg:mb-16 sm:text-xl dark:text-gray-400">
+      <p className="font-light text-white text-lg">
         Explore the whole collection of movies
       </p>
     </div>
-  );
-};
+  )
+}
 
-const MovieList = props => {
+const HeroBanner = (props) => {
+  if (props.loading) {
+    return <div className=""></div>
+  }
+  return (
+    <div className="h-[500px] xl:h-[576px] 2xl:h-[700px]">
+      <Carousel slideInterval={5000} pauseOnHover={true} indicators={false}>
+        {props.movies.map((item, key) => {
+          console.log(item)
+          return (
+            <div
+              className={`relative flex text-white h-full`}
+              style={{
+                backgroundImage: `url(${item.imageUrl})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+              }}
+              key={key}>
+              <div className="w-full z-10 flex items-center px-20">
+                <div className="mx-auto md:ml-[10%] max-w-[600px] flex flex-col gap-4">
+                  <div className="flex flex-col gap-2">
+                    <div className="flex">genre duration rating</div>
+                    <h2 className="text-4xl font-bold">{item.title}</h2>
+                  </div>
+                  <p className="text-lg overflow-hidden line-clamp-4">
+                    {item.plot}
+                  </p>
+                  {item.wikipediaUrl ? (
+                    <Button
+                      className="bg-custom-blue-500 text-2xl font-semibold flex justify-center rounded py-2 max-w-72"
+                      onClick={() => window.open(item.wikipediaUrl, '_blank')}>
+                      More
+                    </Button>
+                  ) : null}
+                </div>
+              </div>
+              {/* Add dark overlay */}
+              <div class="before:absolute before:inset-0 before:bg-black before:opacity-50"></div>
+            </div>
+          )
+        })}
+      </Carousel>
+    </div>
+  )
+}
+
+const MovieList = (props) => {
   if (props.loading) {
     return (
       <div className="text-center">
         <Spinner size="xl" />
       </div>
-    );
+    )
   }
 
   return (
     <div className="grid gap-4 md:gap-y-8 xl:grid-cols-6 lg:grid-cols-4 md:grid-cols-3">
       {props.children}
     </div>
-  );
-};
+  )
+}
 
-const MovieItem = props => {
+const MovieItem = (props) => {
   return (
-    <div className="flex flex-col w-full h-full rounded-lg shadow-md lg:max-w-sm">
+    <div className="flex flex-col w-full h-full rounded-lg shadow-md lg:max-w-sm bg-custom-gray-600">
       <div className="grow">
         <img
           className="object-cover w-full h-60 md:h-80"
@@ -87,47 +132,41 @@ const MovieItem = props => {
 
       <div className="grow flex flex-col h-full p-3">
         <div className="grow mb-3 last:mb-0">
-          {props.year || props.rating
-            ? <div className="flex justify-between align-middle text-gray-900 text-xs font-medium mb-2">
-                <span>{props.year}</span>
+          {props.year || props.rating ? (
+            <div className="flex justify-between align-middle text-gray-300 text-xs font-medium mb-2">
+              <span>{props.year}</span>
 
-                {props.rating
-                  ? <Rating>
-                      <Rating.Star />
+              {props.rating ? (
+                <Rating>
+                  <Rating.Star />
 
-                      <span className="ml-0.5">
-                        {props.rating}
-                      </span>
-                    </Rating>
-                  : null
-                }
-              </div>
-            : null
-          }
+                  <span className="ml-0.5">{props.rating}</span>
+                </Rating>
+              ) : null}
+            </div>
+          ) : null}
 
-          <h3 className="text-gray-900 text-lg leading-tight font-semibold mb-1">
+          <h3 className="text-gray-300 text-lg leading-tight font-semibold mb-1">
             {props.title}
           </h3>
 
-          <p className="text-gray-600 text-sm leading-normal mb-4 last:mb-0">
+          <p className="text-gray-400 text-sm leading-normal mb-4 last:mb-0">
             {props.plot.substr(0, 80)}...
           </p>
         </div>
 
-        {props.wikipediaUrl
-          ? <Button
-              color="light"
-              size="xs"
-              className="w-full"
-              onClick={() => window.open(props.wikipediaUrl, '_blank')}
-            >
-              More
-            </Button>
-          : null
-        }
+        {props.wikipediaUrl ? (
+          <Button
+            color="light"
+            size="xs"
+            className="w-full"
+            onClick={() => window.open(props.wikipediaUrl, '_blank')}>
+            More
+          </Button>
+        ) : null}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App
