@@ -4,21 +4,47 @@ import { Button, Rating, Spinner, Carousel, Dropdown, Drawer } from 'flowbite-re
 const App = (props) => {
   const [movies, setMovies] = useState([])
   const [loading, setLoading] = useState(true)
+  const [movieGenres, setMovieGenres] = useState([])
+  const [genres, setGenres] = useState([])
 
   const fetchMovies = () => {
-    setLoading(true)
-
     return fetch('http://localhost:8000/movies')
       .then((response) => response.json())
       .then((data) => {
         setMovies(data)
-        setLoading(false)
       })
   }
 
+  const fetchMovieGenres = () => {
+    return fetch('http://localhost:8000/movie-genres')
+      .then((response) => response.json())
+      .then((data) => {
+        setMovieGenres(data)
+      })
+  }
+
+  const fetchGenres = () => {
+    return fetch('http://localhost:8000/genres')
+      .then((response) => response.json())
+      .then((data) => {
+        setGenres(data)
+      })
+  }
+
+  // Execute all fetch operations
   useEffect(() => {
     fetchMovies()
+    fetchMovieGenres()
+    fetchGenres()
   }, [])
+
+  // Remove loading screen after all the data is fetched
+  useEffect(() => {
+    if (movies.length > 0 && movieGenres.length > 0 && genres.length > 0) {
+      setLoading(false)
+    }
+  }, [movies, movieGenres, genres])
+
 
   return (
     <Layout>
