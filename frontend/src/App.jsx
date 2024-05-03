@@ -7,7 +7,8 @@ import {
   Dropdown,
   Drawer,
 } from 'flowbite-react'
-import GenreSidebar from './components/GenreSidebar'
+
+import MovieListSettings from './components/MovieListSettings'
 
 const customBlue500 = '#3086BD'
 // 'custom-gray-900': '#1E2126',
@@ -77,6 +78,7 @@ const App = (props) => {
         movies={movies}
         movieGenres={movieGenres}
         setShowMovies={setShowMovies}
+        showMovies={showMovies}
       />
       <MovieList loading={loading}>
         {showMovies.map((item, key) => (
@@ -172,21 +174,7 @@ const MovieList = (props) => {
   )
 }
 
-const MovieListSettings = (props) => {
-  if (props.loading) {
-    return <div className=""></div>
-  }
-  return (
-    <div className="flex my-4 mx-8 gap-4">
-      <GenreSidebar
-        genres={props.genres}
-        movies={props.movies}
-        movieGenres={props.movieGenres}
-        setShowMovies={props.setShowMovies}
-      />
-    </div>
-  )
-}
+
 
 const MovieItem = (props) => {
   return (
