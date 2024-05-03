@@ -1,11 +1,25 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Rating, Spinner, Carousel, Dropdown, Drawer } from 'flowbite-react'
+import {
+  Button,
+  Rating,
+  Spinner,
+  Carousel,
+  Dropdown,
+  Drawer,
+} from 'flowbite-react'
+import GenreSidebar from './components/GenreSidebar'
+
+const customBlue500 = '#3086BD'
+// 'custom-gray-900': '#1E2126',
+// 'custom-gray-600': '#4F5052',
 
 const App = (props) => {
   const [movies, setMovies] = useState([])
   const [loading, setLoading] = useState(true)
   const [movieGenres, setMovieGenres] = useState([])
   const [genres, setGenres] = useState([])
+  // This is the state of the movies that will appear on the website
+  const [showMovies, setShowMovies] = useState([])
 
   const fetchMovies = () => {
     return fetch('http://localhost:8000/movies')
@@ -38,20 +52,34 @@ const App = (props) => {
     fetchGenres()
   }, [])
 
-  // Remove loading screen after all the data is fetched
+  // On first website load, load the movies into showMovies State
   useEffect(() => {
     if (movies.length > 0 && movieGenres.length > 0 && genres.length > 0) {
-      setLoading(false)
+      let copyMoviesState = JSON.parse(JSON.stringify(movies))
+      setShowMovies(copyMoviesState)
     }
   }, [movies, movieGenres, genres])
 
+  // Remove loading screen after all the data is loaded
+  useEffect(() => {
+    if (showMovies.length > 0) {
+      setLoading(false)
+    }
+  }, [showMovies])
 
   return (
     <Layout>
       <Heading />
       <HeroBanner movies={movies} loading={loading} />
+      <MovieListSettings
+        loading={loading}
+        genres={genres}
+        movies={movies}
+        movieGenres={movieGenres}
+        setShowMovies={setShowMovies}
+      />
       <MovieList loading={loading}>
-        {movies.map((item, key) => (
+        {showMovies.map((item, key) => (
           <MovieItem key={key} {...item} />
         ))}
       </MovieList>
@@ -140,6 +168,22 @@ const MovieList = (props) => {
   return (
     <div className="grid gap-4 md:gap-y-8 xl:grid-cols-6 lg:grid-cols-4 md:grid-cols-3">
       {props.children}
+    </div>
+  )
+}
+
+const MovieListSettings = (props) => {
+  if (props.loading) {
+    return <div className=""></div>
+  }
+  return (
+    <div className="flex my-4 mx-8 gap-4">
+      <GenreSidebar
+        genres={props.genres}
+        movies={props.movies}
+        movieGenres={props.movieGenres}
+        setShowMovies={props.setShowMovies}
+      />
     </div>
   )
 }
